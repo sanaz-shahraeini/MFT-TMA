@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AuthModal from "./AuthModal";
 import { signInWithEmail, signUpWithEmail } from "@/lib/auth";
+import { useToast } from "@/components/ui/use-toast";
+import { registerForCourse } from "@/lib/courses";
 import ChallengesGrid from "./ChallengesGrid";
 import UserProfile from "./UserProfile";
 import Header from "./Header";
@@ -41,9 +43,28 @@ const Home = ({
     setIsAuthModalOpen(false);
   };
 
-  const handleCourseSelect = (courseId: string) => {
-    setSelectedCourseId(courseId);
-    setIsModalOpen(true);
+  const handleCourseSelect = async (courseId: string) => {
+    if (!isAuthenticated) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    try {
+      const { registration, error } = await registerForCourse(courseId);
+      if (error) throw error;
+
+      toast({
+        title: "ثبت‌نام موفق",
+        description: "شما با موفقیت در دوره ثبت‌نام کردید",
+      });
+    } catch (error) {
+      console.error("Error registering for course:", error);
+      toast({
+        title: "خطا در ثبت‌نام",
+        description: "مشکلی در ثبت‌نام پیش آمده است. لطفا دوباره تلاش کنید.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

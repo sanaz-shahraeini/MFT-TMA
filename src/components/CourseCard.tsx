@@ -50,7 +50,7 @@ const CourseCard = ({
               <Tooltip>
                 <TooltipTrigger>
                   <Badge variant="secondary" className="bg-black/70 text-white">
-                    <Lock className="w-4 h-4 mr-1" />
+                    <Lock className="w-4 h-4 ml-1" />
                     نیاز به NFT
                   </Badge>
                 </TooltipTrigger>

@@ -49,18 +49,18 @@ const ChallengeCard = ({
         <div className="flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <Badge variant="outline">{submissionType} submission</Badge>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-reverse space-x-2">
               <Clock className="w-4 h-4 text-gray-500" />
               <span className="text-sm text-gray-500">{endDate}</span>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-reverse space-x-4">
             <div className="flex items-center">
-              <Coins className="w-4 h-4 text-yellow-500 mr-1" />
+              <Coins className="w-4 h-4 text-yellow-500 ml-1" />
               <span className="font-medium">{rewardTon} TON</span>
             </div>
             <div className="flex items-center">
-              <Trophy className="w-4 h-4 text-purple-500 mr-1" />
+              <Trophy className="w-4 h-4 text-purple-500 ml-1" />
               <span className="font-medium">{rewardXp} XP</span>
             </div>
           </div>

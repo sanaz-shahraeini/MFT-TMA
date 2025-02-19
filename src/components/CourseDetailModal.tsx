@@ -11,8 +11,14 @@ import { Badge } from "./ui/badge";
 import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 import { Lock, Wallet, CheckCircle2, BookOpen } from "lucide-react";
+import { registerForCourse } from "@/lib/courses";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface CourseDetailModalProps {
+  isAuthenticated?: boolean;
+  onAuth?: () => void;
+  courseId?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   title?: string;
@@ -25,6 +31,7 @@ interface CourseDetailModalProps {
 }
 
 const CourseDetailModal = ({
+  courseId = "1",
   open = true,
   onOpenChange = () => {},
   title = "مقدمه‌ای بر تکنولوژی بلاکچین",
@@ -38,7 +45,31 @@ const CourseDetailModal = ({
   ],
   nftRequired = false,
   hasDiscount = false,
-  onRegister = () => console.log("Register clicked"),
+  isAuthenticated = false,
+  onAuth = () => {},
+  onRegister = async () => {
+    if (!isAuthenticated) {
+      onAuth();
+      return;
+    }
+
+    try {
+      const { registration, error } = await registerForCourse(courseId);
+      if (error) throw error;
+      toast({
+        title: "ثبت‌نام موفق",
+        description: "شما با موفقیت در دوره ثبت‌نام کردید",
+      });
+      onOpenChange(false);
+    } catch (error) {
+      console.error("Error registering for course:", error);
+      toast({
+        title: "خطا در ثبت‌نام",
+        description: "مشکلی در ثبت‌نام پیش آمده است. لطفا دوباره تلاش کنید.",
+        variant: "destructive",
+      });
+    }
+  },
 }: CourseDetailModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -49,7 +80,7 @@ const CourseDetailModal = ({
             <div className="flex gap-2">
               {nftRequired && (
                 <Badge variant="secondary" className="bg-black/70 text-white">
-                  <Lock className="w-4 h-4 mr-1" />
+                  <Lock className="w-4 h-4 ml-1" />
                   NFT Required
                 </Badge>
               )}
@@ -68,7 +99,7 @@ const CourseDetailModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-grow mt-6 pr-4">
+        <ScrollArea className="flex-grow mt-6 pl-4">
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold flex items-center gap-2">

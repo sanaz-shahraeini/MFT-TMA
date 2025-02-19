@@ -71,7 +71,7 @@ const UserProfile = ({
       {/* User Stats Card */}
       <Card className="bg-white">
         <CardHeader>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-reverse space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
               <img
                 src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`}
@@ -103,14 +103,14 @@ const UserProfile = ({
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-blue-50 rounded-lg">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-reverse space-x-2">
                   <Coins className="w-5 h-5 text-blue-500" />
                   <span className="font-medium">TON دریافتی</span>
                 </div>
                 <p className="mt-2 text-2xl font-bold">{user.totalTonEarned}</p>
               </div>
               <div className="p-4 bg-purple-50 rounded-lg">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-reverse space-x-2">
                   <Trophy className="w-5 h-5 text-purple-500" />
                   <span className="font-medium">چالش‌های تکمیل شده</span>
                 </div>
@@ -127,7 +127,7 @@ const UserProfile = ({
                 {user.achievements.map((achievement, index) => (
                   <div
                     key={index}
-                    className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg"
+                    className="flex items-start space-x-reverse space-x-3 p-3 bg-gray-50 rounded-lg"
                   >
                     {getIcon(achievement.icon)}
                     <div>
